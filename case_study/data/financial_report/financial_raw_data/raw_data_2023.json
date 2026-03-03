@@ -1,0 +1,35 @@
+{
+    "revenue": {
+        "breakdown": {
+            "product_sales": 6500000,
+            "service_and_maintenance_fees": 2100000,
+            "subscription_income": 850000,
+            "interest_income": 10000
+        }
+    },
+    "expenses": {
+        "breakdown": {
+            "cost_of_goods_sold": {
+                "raw_materials": 4100000,
+                "manufacturing_labor": 2150000
+            },
+            "operating_expenses": {
+                "sales_and_marketing": {
+                    "advertising_campaigns": 100000,
+                    "sales_commissions": 520000,
+                    "marketing_team_salaries": 520000
+                },
+                "research_and_development": {
+                    "rd_salaries_and_benefits": 340000,
+                    "prototyping_and_testing": 100000
+                },
+                "general_and_administrative": {
+                    "executive_salaries": 820000,
+                    "office_rent_and_utilities": 380000,
+                    "depreciation": 150000
+                }
+            },
+            "interest_expense": 180000
+        }
+    }
+}
