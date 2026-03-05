@@ -14,8 +14,8 @@ class Agent:
         self.tool_registry = ToolRegistry()
         self.conversation_history = []
         self.responses = []
-        self.model_name = config['model_name']
-        self.agent_name = config['agent_name']
+        self.model_name = config.get['model_name']
+        self.agent_name = config.get('agent_name', 'Assistant')
         self.max_rounds = config['max_rounds']
         self.system_prompt_file = config['system_prompt_file']
         self.save_conversation_file = config['save_conversation_file']

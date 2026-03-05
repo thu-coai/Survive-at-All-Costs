@@ -8,10 +8,10 @@ class LLMClient:
     def __init__(self, config: dict):
         self.api_key = config.get('api_key', None)
         self.api_base_url = config.get('api_base_url', None)
-        self.model = config.get('model_name', None)
+        self.model = config['model_name']
         self.max_tokens = config.get('max_tokens', 8192)
         self.temperature = config.get('temperature', 0.6)
-        self.max_retries = config.get('max_retries', 10)
+        self.max_retries = config.get('max_retries', 20)
         
         if not self.api_key:
             raise ValueError("LLM_API_KEY is not set")
@@ -21,7 +21,7 @@ class LLMClient:
         else:
             self.client = OpenAI(api_key=self.api_key)
     
-    
+
     def chat_completion(self, messages: List[Dict[str, str]], tools: Optional[List[Dict]] = None) -> Dict[str, Any]:
         """Send Chat Request to LLM API"""
         
