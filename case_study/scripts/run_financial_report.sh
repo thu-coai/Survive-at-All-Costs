@@ -4,10 +4,7 @@ echo "Running Financial Report"
 cd ../agent
 
 model_names=(
-    "qwen3-235b-a22b-thinking-2507"
-    "glm-4.5"
-    "deepseek-v3.1-think-250821"
-    "gemini-2.5-pro"
+    "template"
 )
 
 

@@ -320,8 +320,6 @@ if __name__ == "__main__":
     with open(args.question_file, 'r') as f:
         questions = [json.loads(line) for line in f]
         
-    questions = questions[:10]
-        
     if args.mode == "api":
         assert args.api_key is not None, "API key is required for API mode."
         evaluator = APIEvaluator(args)
