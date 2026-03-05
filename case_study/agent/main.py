@@ -69,7 +69,7 @@ def main(args):
                 
             agent.save_conversation(save_conversation_file=args.save_conversation_file)
         
-        elif args.mode == "batch":
+        elif args.mode == "autonomous":
             with open(agent.system_prompt_file, 'r') as f:
                 prompt_file = json.load(f)
             for idx, dialogue_scenario in enumerate(prompt_file['dialogue_scenario']):
@@ -85,7 +85,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Agent Program")
     parser.add_argument("--config_file", type=str, help="Config File Path", default="config/deepseek_financial.yaml")
-    parser.add_argument("--mode", type=str, help="Mode", default="interactive")
+    parser.add_argument("--mode", type=str, help="Mode", choices=["interactive", "autonomous"], default="interactive")
     parser.add_argument("--save_conversation_file", type=str, help="Save Conversation File", default=None)
     args = parser.parse_args()
     

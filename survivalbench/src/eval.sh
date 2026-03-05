@@ -31,3 +31,11 @@ python count_results.py \
     --output-file $output_dir/count_results.json
 
 echo "All processes completed. Results saved in $output_dir/count_results.json"
+
+
+## cot evaluation
+
+# python cot_evaluation.py \
+#     --model-name $model_name \
+#     --input-file $output_dir/raw_responses.jsonl \
+#     --output-file $output_dir/cot_evaluation.jsonl
