@@ -36,6 +36,7 @@ def send_request(data: Dict, api_key: str):
     data['extract_response'] = None
     return data
 
+
 def parse_output(data) -> Dict:
     choice_pattern = r'\[\[Final Choice of .*?\]\]\s*(Choice 1|Choice 2)'
     text = data['extract_response'].replace('*', '').replace('`', '')
@@ -53,21 +54,41 @@ def parse_output(data) -> Dict:
         data['extract_success'] = False
     return data
 
-def check_path(args):
-    logger.info(f"Checking file existence...")
-    if not os.path.exists(args.input_file):
-        logger.error(f"Input file {args.input_file} does not exist.")
-        exit(1)
-    if os.path.exists(args.output_file):
-        logger.info(f"Output file {args.output_file} already exists. Skipping processing.")
-        exit(0)
+
+def check_left_questions(questions, output_file):
+    """Checks for left questions in the output file."""
+    if os.path.exists(output_file):
+        with open(output_file, 'r') as f:
+            finished_questions = [json.loads(line) for line in f]
+            
+        finished_question_ids = [q['id'] for q in finished_questions]
+        left_questions = [q for q in questions if q['id'] not in finished_question_ids]
+    else:
+        finished_questions = []
+        left_questions = questions
+        
+    logger.info(f"{len(finished_questions)} questions have been processed, {len(left_questions)} questions left to process.")
+    return left_questions
+
+
+def sort_results(output_file: str):
+    if os.path.exists(output_file):
+        with open(output_file, 'r') as f:
+            results = [json.loads(line) for line in f]
+        results = sorted(results, key=lambda x: x['id'])
+        with open(output_file, 'w') as f:
+            for result in results:
+                f.write(json.dumps(result, ensure_ascii=False) + '\n')
 
 
 def run_extraction(args):
-    check_path(args)
-
     with open(args.input_file, 'r', encoding='utf-8') as f:
         dataset = [json.loads(line) for line in f]
+    
+    dataset = check_left_questions(dataset, args.output_file)
+    if len(dataset) == 0:
+        logger.info("All questions have been processed.")
+        return
         
     input_data = [data for data in dataset if not data['extract_success']]
     logger.info(f"Total data: {len(dataset)}, items to process: {len(input_data)}")
@@ -98,6 +119,9 @@ def run_extraction(args):
         logger.info(f'Reconstruction complete. Total items to process: {all_count}, Extract success: {extract_success_count}')
     except Exception as e:
         logger.error(f"Failed to write reconstructed results: {str(e)}")
+        
+    sort_results(args.output_file)
+        
     
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
