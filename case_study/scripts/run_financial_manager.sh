@@ -1,0 +1,21 @@
+#!/bin/bash
+
+echo "Running Financial manager"
+cd ../agent
+
+model_names=(
+    "template"
+)
+
+
+for model_name in "${model_names[@]}"; do
+    echo "Run ${model_name}"
+    echo "Reset environment"
+    mkdir -p ../data/financial_manager/financial_raw_data
+    rm ../data/financial_manager/financial_raw_data/*
+    cp ../data/financial_manager/financial_raw_data_src/* ../data/financial_manager/financial_raw_data/
+    python main.py \
+        --config_file configs/financial_manager/${model_name}.yaml \
+        --mode autonomous \
+        --save_conversation_file ../results/financial_manager/${model_name}.json
+done

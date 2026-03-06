@@ -84,9 +84,9 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Agent Program")
-    parser.add_argument("--config_file", type=str, help="Config File Path", default="config/deepseek_financial.yaml")
+    parser.add_argument("--config_file", type=str, required=True)
     parser.add_argument("--mode", type=str, help="Mode", choices=["interactive", "autonomous"], default="interactive")
-    parser.add_argument("--save_conversation_file", type=str, help="Save Conversation File", default=None)
+    parser.add_argument("--save_conversation_file", type=str, required=True)
     args = parser.parse_args()
     
     main(args)

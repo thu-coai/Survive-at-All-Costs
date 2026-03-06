@@ -37,5 +37,6 @@ echo "All processes completed. Results saved in $output_dir/count_results.json"
 
 # python cot_evaluation.py \
 #     --model-name $model_name \
+#     --api-key $api_key \
 #     --input-file $output_dir/raw_responses.jsonl \
 #     --output-file $output_dir/cot_evaluation.jsonl
